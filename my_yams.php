@@ -12,7 +12,6 @@ class Yams {
 	public function __construct ($args) {
 		$this->args = $args;
 		$this->checkArgs();
-		//$this->permutations(5);
 		$this->getProba();
 	}
 
@@ -32,7 +31,7 @@ class Yams {
 	}
 
 	public function permutations ($n) {
-		//ugly af & dumb but no time
+		//kinda ugly but no time
 		$perms = [];
 		for($i=1; $i<7; $i++){
 			if($n === 1){
@@ -68,6 +67,9 @@ class Yams {
 
 	public function getProba () {
 		if(in_array($this->combination, ['brelan', 'carre', 'yams'])){
+			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], range(1, 6)))
+				exit(-1);
+
 			$locked = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
 			$needed =  ['brelan' => 3, 'carre' => 4, 'yams' => 5][$this->combination] - $locked;
 			
@@ -83,6 +85,9 @@ class Yams {
 		}
 
 		else if($this->combination === 'full'){
+			if(count($this->combinationParams) !== 2 || empty($this->combinationParams[0]) || empty($this->combinationParams[1]) || !in_array($this->combinationParams[0], range(1, 6)) || !in_array($this->combinationParams[1], range(1, 6)) || $this->combinationParams[0] === $this->combinationParams[1])
+				exit(-1);
+
 			$lockedX = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
 			$lockedY = @array_count_values($this->dice)[$this->combinationParams[1]] ?: 0;
 			$locked = $lockedX + $lockedY;
@@ -100,7 +105,8 @@ class Yams {
 		}
 
 		else if($this->combination === 'suite'){
-			// params ? 6 and (5?)
+			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], [5, 6]))
+				exit(-1);
 			if($this->combinationParams[0] == 6){
 				//2 3 4 5 6
 				$locked =  0;
