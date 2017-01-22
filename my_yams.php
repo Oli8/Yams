@@ -75,7 +75,6 @@ class Yams {
 				return $this->displayResult(100);
 
 			$rolls = 5 - $locked;
-			//echo "$locked $needed $rolls\n";
 			$this->permutations($rolls);
 
 			$this->displayResult(count(array_filter($this->perms, function($v) use ($needed){
@@ -87,8 +86,7 @@ class Yams {
 			$lockedX = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
 			$lockedY = @array_count_values($this->dice)[$this->combinationParams[1]] ?: 0;
 			$locked = $lockedX + $lockedY;
-			echo "full\n";
-			echo "$lockedX $lockedY $locked\n";
+
 			if(($lockedX === 3 && $lockedY === 2) || ($lockedX === 2 && $lockedY === 3))
 				return $this->displayResult(100);
 
@@ -102,8 +100,10 @@ class Yams {
 		}
 
 		else if($this->combination === 'suite'){
-			// choose which suite to do 1,2,3,4,5 or 2,3,4,5,6
-			
+			// params ? 6 and (5?)
+			if($this->combinationParams[0] === 6){
+				echo "suite au 6";
+			}
 		}
 
 	}
@@ -127,14 +127,5 @@ if(array_key_exists('h', $options) || array_key_exists('help', $options))
 new Yams(array_slice($argv, 1));
 
 echo PHP_EOL;
-
-
-/*
-Brelan
-Suite
-Full
-Carré
-Yams
-*/
 
 ?>
