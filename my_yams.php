@@ -17,41 +17,40 @@ class Yams {
 
 	public function checkArgs () {
 		if(count($this->args) !== 6)
-			exit(-1);
+			die("Nombre d'arguments incorrectes, entrez les 5 dés suivui de la figure souhaitée, tapez --help pour voir l'aide.\n");
 
-		//check dice
 		if(count($this->dice = array_filter(array_slice($this->args, 0, 5), function($v){
 			return in_array($v, range(1, 6));
 		})) !== 5)
-			exit(-1);
+			die("Veuillez rentrer les 5 dés compris entre 1 et 6, tapez --help pour voir l'aide.\n");
 
-		if(!in_array($this->combination = explode('_', end($this->args))[0], $this->combinations))
-			exit(-1);
-		$this->combinationParams = array_slice(explode('_', end($this->args)), 1);
+		$combination = explode('_', end($this->args));
+		if(!in_array($this->combination = $combination[0], $this->combinations))
+			die("Combinaison incorrecte, tapez --help pour voir l'aide.\n");
+		$this->combinationParams = array_slice($combination, 1);
 	}
 
 	public function permutations ($n) {
 		//kinda ugly but no time
-		$perms = [];
 		for($i=1; $i<7; $i++){
 			if($n === 1){
-				$perms[] = [$i];
+				$this->perms[] = [$i];
 			} else {
 				for($j=1; $j<7; $j++){
 					if($n === 2){
-						$perms[] = [$i, $j];
+						$this->perms[] = [$i, $j];
 					} else {
 						for($k=1; $k<7; $k++){
 							if($n === 3){
-								$perms[] = [$i, $j, $k];
+								$this->perms[] = [$i, $j, $k];
 							} else {
 								for($l=1; $l<7; $l++){
 									if($n === 4){
-										$perms[] = [$i, $j, $k, $l];
+										$this->perms[] = [$i, $j, $k, $l];
 									} else {
 										for($m=1; $m<7; $m++){
 											if($n === 5){
-												$perms[] = [$i, $j, $k, $l, $m];
+												$this->perms[] = [$i, $j, $k, $l, $m];
 											}
 										}
 									}
@@ -62,7 +61,6 @@ class Yams {
 				}
 			}
 		}
-		$this->perms = $perms;
 	}
 
 	public function getProba () {
@@ -163,8 +161,8 @@ class Yams {
 	}
 
 	public static function displayHelp () {
-		echo join("\n", ['USAGE', 'php my_yams.php d1 d2 d3 d4 d5 c', 'DESCRIPTION', 'd1 la valeur de premier dé', 'd2 la valeur de deuxième dé',
-		'd3 la valeur de troisième dé', 'd4 la valeur de quatrième dé', 'd5 la valeur de cinquième dé', 'd6 la valeur de sixième dé', 'c la combinaison souhaitée']);
+		echo join("\n", ['USAGE', 'php my_yams.php d1 d2 d3 d4 d5 c', '', 'DESCRIPTION', 'd1 la valeur de premier dé', 'd2 la valeur de deuxième dé',
+		'd3 la valeur de troisième dé', 'd4 la valeur de quatrième dé', 'd5 la valeur de cinquième dé', 'd6 la valeur de sixième dé', 'c la combinaison souhaitée', '', 'combinaison: brelan, carre, yams, full, suite', 'exemple:', 'php my_yams.php 1 2 3 2 1 brelan_2', 'php my_yams.php 4 5 4 3 1 full_4_3', 'php my_yams.php 2 3 3 5 4 suite_6']) . "\n";
 	}
 
 }
