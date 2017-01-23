@@ -106,7 +106,7 @@ class Yams {
 			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], [5, 6]))
 				exit(-1);
 
-			$toMatch = $this->combinationParams[0] == 6 ? range(2, 6) : range(1, 5);
+			$toMatch = range($this->combinationParams[0] - 4, $this->combinationParams[0]);
 			$lockedDice = array_unique(array_intersect($this->dice, $toMatch));
 			$locked = count($lockedDice);
 
