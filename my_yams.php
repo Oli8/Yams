@@ -105,16 +105,10 @@ class Yams {
 		else if($this->combination === 'suite'){
 			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], [5, 6]))
 				exit(-1);
-				//2 3 4 5 6
-			$locked =  0;
-			$lockedDice = [];
-			$matched = $this->combinationParams[0] == 6 ? range(2, 6) : range(1, 5);
-			foreach($matched as $v){
-				if(in_array($v, $this->dice)){
-					$locked++;
-					$lockedDice[] = $v;
-				}
-			}
+
+			$toMatch = $this->combinationParams[0] == 6 ? range(2, 6) : range(1, 5);
+			$lockedDice = array_unique(array_intersect($this->dice, $toMatch));
+			$locked = count($lockedDice);
 
 			if($locked === 5)
 				return $this->displayResult(100);
@@ -122,10 +116,10 @@ class Yams {
 			$rolls = 5 - $locked;
 			$this->permutations($rolls);
 
-			$this->displayResult($this->filterPermutations(function($v) use ($lockedDice, $matched){
+			$this->displayResult($this->filterPermutations(function($v) use ($lockedDice, $toMatch){
 				$a = array_merge($lockedDice, $v);
 				sort($a);
-				return $a == $matched;
+				return $a == $toMatch;
 			}, $rolls));
 
 		}
