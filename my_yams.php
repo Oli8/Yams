@@ -55,7 +55,7 @@ class Yams {
 	public function getProba () {
 		if(in_array($this->combination, ['brelan', 'carre', 'yams'])){
 			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], range(1, 6)))
-				exit(-1);
+				die("Vous devez renseigner le $this->combination souhaité, exemple: {$this->combination}_3.\n");
 
 			$locked = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
 			$needed =  ['brelan' => 3, 'carre' => 4, 'yams' => 5][$this->combination] - $locked;
@@ -73,7 +73,7 @@ class Yams {
 
 		else if($this->combination === 'full'){
 			if(count($this->combinationParams) !== 2 || empty($this->combinationParams[0]) || empty($this->combinationParams[1]) || !in_array($this->combinationParams[0], range(1, 6)) || !in_array($this->combinationParams[1], range(1, 6)) || $this->combinationParams[0] === $this->combinationParams[1])
-				exit(-1);
+				die("Vous devez renseigner le full souhaité, exemple: full_2_3.\n");
 
 			$lockedX = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
 			$lockedY = @array_count_values($this->dice)[$this->combinationParams[1]] ?: 0;
@@ -93,7 +93,7 @@ class Yams {
 
 		else if($this->combination === 'suite'){
 			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], [5, 6]))
-				exit(-1);
+				die("Vous devez renseigner la suite souhaité (suite_5 ou suite_6).\n");
 
 			$toMatch = range($this->combinationParams[0] - 4, $this->combinationParams[0]);
 			$lockedDice = array_unique(array_intersect($this->dice, $toMatch));
