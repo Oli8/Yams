@@ -8,6 +8,7 @@ class Yams {
 	public $combinationParams;
 	public $dice = [];
 	public $perms = [];
+	public $rolls = 0;
 
 	public function __construct ($args) {
 		$this->args = $args;
@@ -104,13 +105,13 @@ class Yams {
 			};
 		}
 
-		$rolls = 5 - $locked;
-		$this->permutations($rolls);
-		$this->displayResult($this->filterPermutations($filterFunc, $rolls));
+		$this->rolls = 5 - $locked;
+		$this->permutations($this->rolls);
+		$this->displayResult($this->filterPermutations($filterFunc));
 	}
 
-	public function filterPermutations (Closure $filterFunc, $rolls) {
-		return count(array_filter($this->perms, $filterFunc)) / pow(6, $rolls) * 100;
+	public function filterPermutations (Closure $filterFunc) {
+		return count(array_filter($this->perms, $filterFunc)) / pow(6, $this->rolls) * 100;
 	}
 
 	public function displayResult ($value) {	
