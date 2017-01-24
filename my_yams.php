@@ -31,36 +31,25 @@ class Yams {
 	}
 
 	public function permutations ($n) {
-		//kinda ugly but no time
-		for($i=1; $i<7; $i++){
-			if($n === 1){
+		for($i=1; $i<7; $i++)
+			if($n === 1)
 				$this->perms[] = [$i];
-			} else {
-				for($j=1; $j<7; $j++){
-					if($n === 2){
+			else
+				for($j=1; $j<7; $j++)
+					if($n === 2)
 						$this->perms[] = [$i, $j];
-					} else {
-						for($k=1; $k<7; $k++){
-							if($n === 3){
+					else
+						for($k=1; $k<7; $k++)
+							if($n === 3)
 								$this->perms[] = [$i, $j, $k];
-							} else {
-								for($l=1; $l<7; $l++){
-									if($n === 4){
+							else
+								for($l=1; $l<7; $l++)
+									if($n === 4)
 										$this->perms[] = [$i, $j, $k, $l];
-									} else {
-										for($m=1; $m<7; $m++){
-											if($n === 5){
+									else
+										for($m=1; $m<7; $m++)
+											if($n === 5)
 												$this->perms[] = [$i, $j, $k, $l, $m];
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 
 	public function getProba () {
@@ -142,7 +131,6 @@ class Yams {
 }
 
 $options = getopt('h', ['help']);
-
 if(array_key_exists('h', $options) || array_key_exists('help', $options))
 	return Yams::displayHelp();
 
