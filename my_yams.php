@@ -3,7 +3,7 @@
 class Yams {
 
 	public $args;
-	public $combinations = ['brelan', 'suite', 'full', 'carre', 'yams'];
+	public $combinations = ['paire', 'brelan', 'suite', 'full', 'carre', 'yams'];
 	public $combination;
 	public $combinationParams;
 	public $dice = [];
@@ -53,12 +53,12 @@ class Yams {
 	}
 
 	public function getProba () {
-		if(in_array($this->combination, ['brelan', 'carre', 'yams'])){
+		if(in_array($this->combination, ['paire', 'brelan', 'carre', 'yams'])){
 			if(count($this->combinationParams) !== 1 || empty($this->combinationParams[0]) || !in_array($this->combinationParams[0], range(1, 6)))
 				die("Vous devez renseigner le $this->combination souhaité, exemple: {$this->combination}_3.\n");
 
 			$locked = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
-			$needed =  ['brelan' => 3, 'carre' => 4, 'yams' => 5][$this->combination] - $locked;
+			$needed =  ['paire' => 2, 'brelan' => 3, 'carre' => 4, 'yams' => 5][$this->combination] - $locked;
 			
 			if($needed <= 0)
 				return $this->displayResult(100);
