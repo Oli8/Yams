@@ -66,9 +66,9 @@ class Yams {
 			$rolls = 5 - $locked;
 			$this->permutations($rolls);
 
-			$this->displayResult($this->filterPermutations(function($v) use ($needed){
+			$filterFunc = function($v) use ($needed){
 				return @array_count_values($v)[$this->combinationParams[0]] >= $needed;
-			}, $rolls));
+			};
 		}
 
 		else if($this->combination === 'full'){
@@ -85,10 +85,9 @@ class Yams {
 			$rolls = 5 - $locked;
 			$this->permutations($rolls);
 
-			$this->displayResult($this->filterPermutations(function($v) use ($lockedX, $lockedY){
+			$filterFunc = function($v) use ($lockedX, $lockedY){
 				return (@array_count_values($v)[$this->combinationParams[0]] + $lockedX === 3  && @array_count_values($v)[$this->combinationParams[1]] + $lockedY === 2) || (@array_count_values($v)[$this->combinationParams[0]] + $lockedX === 2  && @array_count_values($v)[$this->combinationParams[1]] + $lockedY === 3);
-			}, $rolls));
-
+			};
 		}
 
 		else if($this->combination === 'suite'){
@@ -105,14 +104,14 @@ class Yams {
 			$rolls = 5 - $locked;
 			$this->permutations($rolls);
 
-			$this->displayResult($this->filterPermutations(function($v) use ($lockedDice, $toMatch){
+			$filterFunc = function($v) use ($lockedDice, $toMatch){
 				$a = array_merge($lockedDice, $v);
 				sort($a);
 				return $a == $toMatch;
-			}, $rolls));
-
+			};
 		}
 
+		$this->displayResult($this->filterPermutations($filterFunc, $rolls));
 	}
 
 	public function filterPermutations (Closure $filterFunc, $rolls) {
