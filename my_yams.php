@@ -72,8 +72,10 @@ class Yams {
 			if(count($this->combinationParams) !== 2 || empty($this->combinationParams[0]) || empty($this->combinationParams[1]) || !in_array($this->combinationParams[0], range(1, 6)) || !in_array($this->combinationParams[1], range(1, 6)) || $this->combinationParams[0] === $this->combinationParams[1])
 				die("Vous devez renseigner le full souhaité, exemple: full_2_3.\n");
 
-			$lockedX = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
-			$lockedY = @array_count_values($this->dice)[$this->combinationParams[1]] ?: 0;
+			$x = @array_count_values($this->dice)[$this->combinationParams[0]] ?: 0;
+			$y = @array_count_values($this->dice)[$this->combinationParams[1]] ?: 0;
+			$lockedX = $x > 3 ? 3 : $x;
+			$lockedY = $y > 3 ? 3 : $y;
 			$locked = $lockedX + $lockedY;
 
 			if(($lockedX === 3 && $lockedY === 2) || ($lockedX === 2 && $lockedY === 3))
