@@ -18,7 +18,7 @@ class Yams {
 
 	public function checkArgs () {
 		if(count($this->args) !== 6)
-			die("Nombre d'arguments incorrectes, entrez les 5 dés suivui de la figure souhaitée, tapez --help pour voir l'aide.\n");
+			die("Nombre d'arguments incorrectes, entrez les 5 dés suivis de la figure souhaitée, tapez --help pour voir l'aide.\n");
 
 		if(count($this->dice = array_filter(array_slice($this->args, 0, 5), function($v){
 			return in_array($v, range(1, 6));
